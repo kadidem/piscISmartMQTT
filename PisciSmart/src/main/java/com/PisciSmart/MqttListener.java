@@ -13,27 +13,30 @@ import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Service
 public class MqttListener {
 
     @Autowired
     private MqttClient mqttClient;
+    @Autowired
+    private SensorDataRepository sensorDataRepository;
+    @Autowired
+    private SensorDataService sensorDataService;
 
     @Autowired
-    private SensorDataRepository sensorDataRepository; // Assurez-vous que ce repository est correctement configuré
-    private final ObjectMapper objectMapper = new ObjectMapper(); // Déclarez objectMapper ici
+    private NotificationDataRepository notificationDataRepository;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     @PostConstruct
     public void init() {
         try {
-
             subscribe("WaterQuality/topic");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
 
     public void subscribe(String topic) throws Exception {
         mqttClient.subscribe(topic, (t, msg) -> {
@@ -41,41 +44,44 @@ public class MqttListener {
             System.out.println("Message reçu sur le topic " + t + ": " + message);
 
             try {
-                // Parser le message JSON manuellement
                 JSONObject jsonObject = new JSONObject(message);
 
-                // Extraire les valeurs
-                double temperature = jsonObject.getDouble("temperature");
-                int tds = jsonObject.getInt("tds");
-                double ph = jsonObject.getDouble("ph");
+                if (t.equals("WaterQuality/topic")) {
+                    double temperature = jsonObject.getDouble("temperature");
+                    int tds = jsonObject.getInt("tds");
+                    double ph = jsonObject.getDouble("ph");
+                    Long idDispo = jsonObject.getLong("idDispo");
 
-                // Créer un nouvel objet SensorData
-                SensorData sensorData = new SensorData();
-                sensorData.setTemperature(temperature);
-                sensorData.setTds(tds);
-                sensorData.setPh(ph);
+                    SensorData sensorData = new SensorData();
+                    sensorData.setTemperature(temperature);
+                    sensorData.setTds(tds);
+                    sensorData.setPh(ph);
+                    sensorData.setIdDispo(idDispo);
 
-                // Enregistrer l'objet dans la base de données
-                sensorDataRepository.save(sensorData);
-                System.out.println("Données enregistrées avec succès.");
+                    sensorDataRepository.save(sensorData);
+                    System.out.println("Données enregistrées avec succès.");
+                } else if (t.equals("WaterQuality/alerts")) {
+                    String alertMessage = jsonObject.getString("alert");
+                    Long idDispo = jsonObject.getLong("idDispo");
+                    double temperature = jsonObject.optDouble("temperature", -1);
+                    int tds = jsonObject.optInt("tds", -1);
+                    double ph = jsonObject.optDouble("ph", -1);
+
+                    NotificationData notification = new NotificationData();
+                    notification.setIdDispo(idDispo);
+                    notification.setAlertMessage(alertMessage);
+                    notification.setTemperature(temperature);
+                    notification.setTds(tds);
+                    notification.setPh(ph);
+
+                    notificationDataRepository.save(notification);
+                    System.out.println("Notification enregistrée avec succès.");
+                }
             } catch (Exception e) {
                 System.out.println("Erreur lors du traitement des données : " + e.getMessage());
                 e.printStackTrace();
             }
         });
-    }
-
-
-
-    private SensorData parseMessage(String message) {
-        try {
-            // Convertir le message JSON en objet SensorData
-            return objectMapper.readValue(message, SensorData.class);
-        } catch (Exception e) {
-            System.out.println("Erreur lors du parsing du message JSON : " + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
     }
 }
 

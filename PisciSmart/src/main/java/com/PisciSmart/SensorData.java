@@ -5,14 +5,15 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "sensordata")
+@Table(name = "Sensordata")
 public class SensorData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private double temperature;
     private double tds;
     private double ph;
+    private long idDispo;
     @Override
     public String toString() {
         return "SensorData{" +
@@ -20,6 +21,7 @@ public class SensorData {
                 ", temperature=" + temperature +
                 ", tds=" + tds +
                 ", ph=" + ph +
+                ", idDispo=" + idDispo +
                 '}';
     }
 }
