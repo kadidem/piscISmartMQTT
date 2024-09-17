@@ -25,9 +25,15 @@ public class MqttListener {
     @Autowired
     private SensorDataService sensorDataService;
 
-    @Autowired
-    private NotificationDataRepository notificationDataRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    // Seuils pour la qualité de l'eau (à ajuster selon les besoins)
+    private static final double MIN_TEMPERATURE = 18.0;
+    private static final double MAX_TEMPERATURE = 30.0;
+    private static final double MIN_PH = 6.5;
+    private static final double MAX_PH = 8.0;
+    private static final int MIN_TDS = 200;
+    private static final int MAX_TDS = 500;
 
     @PostConstruct
     public void init() {
@@ -60,28 +66,49 @@ public class MqttListener {
 
                     sensorDataRepository.save(sensorData);
                     System.out.println("Données enregistrées avec succès.");
-                } else if (t.equals("WaterQuality/alerts")) {
-                    String alertMessage = jsonObject.getString("alert");
-                    Long idDispo = jsonObject.getLong("idDispo");
-                    double temperature = jsonObject.optDouble("temperature", -1);
-                    int tds = jsonObject.optInt("tds", -1);
-                    double ph = jsonObject.optDouble("ph", -1);
 
-                    NotificationData notification = new NotificationData();
-                    notification.setIdDispo(idDispo);
-                    notification.setAlertMessage(alertMessage);
-                    notification.setTemperature(temperature);
-                    notification.setTds(tds);
-                    notification.setPh(ph);
+                    // Vérification des seuils
+                    if (temperature < MIN_TEMPERATURE || temperature > MAX_TEMPERATURE ||
+                            ph < MIN_PH || ph > MAX_PH || tds < MIN_TDS || tds > MAX_TDS) {
 
-                    notificationDataRepository.save(notification);
-                    System.out.println("Notification enregistrée avec succès.");
+                        // Générer une alerte si les valeurs sont hors seuil
+                        String alertMessage = generateAlertMessage(temperature, ph, tds);
+                        publishAlert(alertMessage, idDispo, temperature, ph, tds);
+                    }
+
                 }
             } catch (Exception e) {
                 System.out.println("Erreur lors du traitement des données : " + e.getMessage());
                 e.printStackTrace();
             }
         });
+    }
+
+    private String generateAlertMessage(double temperature, double ph, int tds) {
+        StringBuilder alertMessage = new StringBuilder("Alerte : ");
+        if (temperature < MIN_TEMPERATURE || temperature > MAX_TEMPERATURE) {
+            alertMessage.append("Température hors seuil. ");
+        }
+        if (ph < MIN_PH || ph > MAX_PH) {
+            alertMessage.append("pH hors seuil. ");
+        }
+        if (tds < MIN_TDS || tds > MAX_TDS) {
+            alertMessage.append("TDS hors seuil. ");
+        }
+        return alertMessage.toString();
+    }
+
+    public void publishAlert(String alertMessage, Long idDispo, double temperature, double ph, int tds) throws Exception {
+        JSONObject alertData = new JSONObject();
+        alertData.put("idDispo", idDispo);
+        alertData.put("alert", alertMessage);
+        alertData.put("temperature", temperature);
+        alertData.put("ph", ph);
+        alertData.put("tds", tds);
+
+        MqttMessage message = new MqttMessage(alertData.toString().getBytes(StandardCharsets.UTF_8));
+        mqttClient.publish("WaterQuality/alerts", message);
+        System.out.println("Alerte publiée: " + alertMessage);
     }
 }
 

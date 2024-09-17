@@ -9,13 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 @CrossOrigin ("*")
 @RestController
-@RequestMapping("/data")
+
 public class SensorDataControler {
 
     @Autowired
     private SensorDataRepository sensorDataRepository;
     @Autowired
     private SensorDataService sensorDataService;
+
+
     @GetMapping("/device")
     public ResponseEntity<List<SensorData>> getAllSensorData() {
         try {
