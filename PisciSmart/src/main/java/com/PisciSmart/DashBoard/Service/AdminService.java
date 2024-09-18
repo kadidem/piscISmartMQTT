@@ -36,7 +36,8 @@ public class AdminService {
         for (Admin admin : adminsToCreate) {
             Admin existingAdmin = adminRepository.findByTelephone(admin.getTelephone());
             if (existingAdmin == null) {
-                // L'administrateur n'existe pas, donc nous le créons
+                // Hacher le mot de passe avant de sauvegarder l'admin
+                admin.setMotDePasse((admin.getMotDePasse()));
                 adminRepository.save(admin);
             } else {
                 System.out.println("L'administrateur avec le telephone suivant " + admin.getTelephone() + " existe déjà.");
@@ -46,7 +47,7 @@ public class AdminService {
 
     public Admin createAdmin(Admin admin) {
         if (adminRepository.findByTelephone(admin.getTelephone()) == null) {
-            admin.setMotDePasse(hashPassword(admin.getMotDePasse())); // Hacher le mot de passe
+            admin.setMotDePasse((admin.getMotDePasse())); // Hacher le mot de passe
             return adminRepository.save(admin);
         } else {
             throw new EntityExistsException("Cet numéro existe déjà");
@@ -55,13 +56,16 @@ public class AdminService {
 
     public Admin connectionAdmin(String telephone, String motDePasse) {
         Admin utilisateur = adminRepository.findByTelephone(telephone);
+       // Admin admin = adminRepository.findByEmailAndMotDePasse(email, motDePasse);
         if (utilisateur == null) {
             throw new EntityNotFoundException("Cet utilisateur n'existe pas");
         }
-        if (!checkPassword(motDePasse, utilisateur.getMotDePasse())) { // Vérifier le mot de passe
+        if (!utilisateur.getMotDePasse().equals(motDePasse)) {
             throw new EntityNotFoundException("Mot de passe incorrect");
         }
-        return utilisateur; // Authentification réussie, retourner l'utilisateur
+
+        // Authentification réussie, retourner l'utilisateur
+        return utilisateur;// Authentification réussie, retourner l'utilisateur
     }
 
     // Méthode pour hacher un mot de passe
@@ -98,15 +102,4 @@ public class AdminService {
         adminRepository.delete(admin);
         return "Utilisateur Supprimé";
     }
-
-    //public Admin connectionAdmin(String telephone, String motDePasse) {
-      //  Admin utilisateur = adminRepository.findByTelephoneAndMotDePasse(telephone, motDePasse);
-        //if (utilisateur == null) {
-        //    throw new EntityNotFoundException("Cet utilisateur n'existe pas");
-    //}
-       // if (!utilisateur.getMotDePasse().equals(motDePasse)) {
-         //   throw new EntityNotFoundException("Mot de passe incorrect");
-        //}
-        //return utilisateur; // Authentification réussie, retourner l'utilisateur
-    //}
 }
