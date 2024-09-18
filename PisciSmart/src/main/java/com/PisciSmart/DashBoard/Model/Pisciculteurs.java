@@ -23,10 +23,10 @@ public class Pisciculteurs {
     private String telephone;
     @Column(nullable = false, unique = true)
     private String password;
-    @Column (nullable = false)
-    private String adresse;
+   // @Column (nullable = false)
+    //private String adresse;
     // Attribut active pour activer/désactiver le compte
-    private boolean active;
+    //private boolean active;
 
     @OneToMany(mappedBy = "pisciculteur", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<employes> employe = new HashSet<>();

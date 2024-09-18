@@ -23,15 +23,15 @@ public class PisciculteurControleur {
         return pisciculteurService.getAllPisciculteurs();
     }
 
-    @PostMapping("/status")
-    public ResponseEntity<Pisciculteurs> activerOuDesactiverCompte(@RequestBody Map<String, Object> body) {
+   // @PostMapping("/status")
+   // public ResponseEntity<Pisciculteurs> activerOuDesactiverCompte(@RequestBody Map<String, Object> body) {
         // Extraire les valeurs depuis la Map
-        Long pisciculteurId = Long.valueOf(body.get("pisciculteurId").toString());
-        boolean active = Boolean.parseBoolean(body.get("active").toString());
+     //   Long pisciculteurId = Long.valueOf(body.get("pisciculteurId").toString());
+    //    boolean active = Boolean.parseBoolean(body.get("active").toString());
 
         // Appeler le service pour activer ou désactiver le compte
-        Pisciculteurs pisciculteur = pisciculteurService.activerOuDesactiverCompte(pisciculteurId, active);
-        return ResponseEntity.ok(pisciculteur);
-    }
+      //  Pisciculteurs pisciculteur = pisciculteurService.activerOuDesactiverCompte(pisciculteurId, active);
+      //  return ResponseEntity.ok(pisciculteur);
+   // }
 }
 
