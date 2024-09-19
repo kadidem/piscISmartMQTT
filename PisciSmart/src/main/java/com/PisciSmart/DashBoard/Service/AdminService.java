@@ -24,23 +24,24 @@ public class AdminService {
     @PostConstruct
     public void init() {
         // Créer une liste d'administrateurs au démarrage de l'application
+        // Créer une liste d'administrateurs au démarrage de l'application
         List<Admin> adminsToCreate = Arrays.asList(
-                new Admin("74746643", "kadidem", "Dembele", "Kadidia mah"),
-                new Admin("72746643", "password1", "Maiga", "Arhamatou"),
-                new Admin("73746643", "password2", "Kane", "Fatoumata"),
-                new Admin("75746643", "password3", "Ifi", "boy"),
-                new Admin("76746643", "password4", "Maiga", "Mahamar")
+                new Admin("74746642", "kadidem1", "Dembele", "Kadidia mah"),
+                new Admin("72746642", "password7", "Maiga", "Arhamatou"),
+                new Admin("73746642", "password0", "Kane", "Fatoumata"),
+                new Admin("75746642", "password9", "Ifi", "boy"),
+                new Admin("76746642", "password8", "Maiga", "Mahamar")
         );
 
         // Boucle pour vérifier et ajouter chaque administrateur s'il n'existe pas
         for (Admin admin : adminsToCreate) {
             Admin existingAdmin = adminRepository.findByTelephone(admin.getTelephone());
             if (existingAdmin == null) {
-                // Hacher le mot de passe avant de sauvegarder l'admin
-                admin.setMotDePasse((admin.getMotDePasse()));
+                // Ne pas hacher le mot de passe, le laisser en clair
                 adminRepository.save(admin);
+                System.out.println("L'administrateur avec le téléphone " + admin.getTelephone() + " a été créé.");
             } else {
-                System.out.println("L'administrateur avec le telephone suivant " + admin.getTelephone() + " existe déjà.");
+                System.out.println("L'administrateur avec le téléphone " + admin.getTelephone() + " existe déjà.");
             }
         }
     }
