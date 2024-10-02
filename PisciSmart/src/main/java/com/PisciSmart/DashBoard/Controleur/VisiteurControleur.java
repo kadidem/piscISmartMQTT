@@ -17,15 +17,20 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000") // Ajouter ceci pour permettre à React d'accéder aux données
 public class VisiteurControleur {
 
-        private final VisiteurService visiteurService;
+    private final VisiteurService visiteurService;
 
-        @Autowired
-          public VisiteurControleur(VisiteurService visiteurService) {
+    @Autowired
+    public VisiteurControleur(VisiteurService visiteurService) {
         this.visiteurService = visiteurService;
     }
 
     @GetMapping("/read")
-        public List<Visiteurs> getAllVisiteurs() {
-            return visiteurService.getAllVisiteurs();
-        }
+    public List<Visiteurs> getAllVisiteurs() {
+        return visiteurService.getAllVisiteurs();
     }
+
+    @GetMapping("/count")
+    public long countVisiteurs() {
+        return visiteurService.countVisiteurs();
+    }
+}

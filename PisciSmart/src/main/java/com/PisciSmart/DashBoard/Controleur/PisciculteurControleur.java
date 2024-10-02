@@ -18,21 +18,27 @@ public class PisciculteurControleur {
     public PisciculteurControleur(PisciculteurService pisciculteurService) {
         this.pisciculteurService = pisciculteurService;
     }
+
     @GetMapping("/read")
     public List<Pisciculteurs> getAllPisciculteurs() {
         return pisciculteurService.getAllPisciculteurs();
     }
-  
 
-   // @PostMapping("/status")
-   // public ResponseEntity<Pisciculteurs> activerOuDesactiverCompte(@RequestBody Map<String, Object> body) {
-        // Extraire les valeurs depuis la Map
-     //   Long pisciculteurId = Long.valueOf(body.get("pisciculteurId").toString());
-    //    boolean active = Boolean.parseBoolean(body.get("active").toString());
+    @GetMapping("/count")
+    public long countPisciculteurs() {
+        return pisciculteurService.countPisciculteurs();
+    }
 
-        // Appeler le service pour activer ou désactiver le compte
-      //  Pisciculteurs pisciculteur = pisciculteurService.activerOuDesactiverCompte(pisciculteurId, active);
-      //  return ResponseEntity.ok(pisciculteur);
-   // }
+    // @PostMapping("/status")
+    // public ResponseEntity<Pisciculteurs> activerOuDesactiverCompte(@RequestBody
+    // Map<String, Object> body) {
+    // Extraire les valeurs depuis la Map
+    // Long pisciculteurId = Long.valueOf(body.get("pisciculteurId").toString());
+    // boolean active = Boolean.parseBoolean(body.get("active").toString());
+
+    // Appeler le service pour activer ou désactiver le compte
+    // Pisciculteurs pisciculteur =
+    // pisciculteurService.activerOuDesactiverCompte(pisciculteurId, active);
+    // return ResponseEntity.ok(pisciculteur);
+    // }
 }
-

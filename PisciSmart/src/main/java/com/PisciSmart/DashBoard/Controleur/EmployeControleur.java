@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping("/employe")
 public class EmployeControleur {
     private final EmployeService employeService;
+
     @Autowired
     public EmployeControleur(EmployeService employeService) {
         this.employeService = employeService;
@@ -27,10 +28,16 @@ public class EmployeControleur {
     public List<employes> getAllEmployer() {
         return employeService.getAllEmployes();
     }
+
     @GetMapping("/{idpisciculteur}/employes")
     public ResponseEntity<List<employes>> getEmployesByPisciculteur(@PathVariable Long idpisciculteur) {
         List<employes> employes = employeService.getEmployesByPisciculteur(idpisciculteur);
         return new ResponseEntity<>(employes, HttpStatus.OK);
     }
-    
+
+    @GetMapping("/count")
+    public long countEmployes() {
+        return employeService.countEmployes();
+    }
+
 }

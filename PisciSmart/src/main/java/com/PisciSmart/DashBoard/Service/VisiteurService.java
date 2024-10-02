@@ -13,8 +13,9 @@ import java.util.List;
 @Service
 public class VisiteurService {
     private final VisiteurRepository visiteurRepository;
+
     @Autowired
-        public VisiteurService(VisiteurRepository visiteurRepository) {
+    public VisiteurService(VisiteurRepository visiteurRepository) {
         this.visiteurRepository = visiteurRepository;
     }
 
@@ -25,5 +26,8 @@ public class VisiteurService {
         }
         return visiteurs;
     }
-    
+
+    public long countVisiteurs() {
+        return visiteurRepository.count();
+    }
 }
