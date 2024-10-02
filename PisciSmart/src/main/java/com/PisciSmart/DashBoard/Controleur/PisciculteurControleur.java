@@ -22,6 +22,7 @@ public class PisciculteurControleur {
     public List<Pisciculteurs> getAllPisciculteurs() {
         return pisciculteurService.getAllPisciculteurs();
     }
+  
 
    // @PostMapping("/status")
    // public ResponseEntity<Pisciculteurs> activerOuDesactiverCompte(@RequestBody Map<String, Object> body) {

@@ -26,6 +26,9 @@ public class PisciculteurService {
         return pisciculteurs;
     }
 
+
+
+    
    // public Pisciculteurs activerOuDesactiverCompte(Long pisciculteurId, boolean activer) {
         // Trouver le pisciculteur par ID
     //    Pisciculteurs pisciculteur = pisciculteurRepository.findById(pisciculteurId)
