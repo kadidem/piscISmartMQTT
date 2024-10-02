@@ -51,7 +51,7 @@ public class SensorDataControler {
             // Utiliser les dernières valeurs (ou une autre logique selon vos besoins)
             SensorData latestData = sensorDataList.get(sensorDataList.size() - 1);
             double percentage = sensorDataService.calculateOverallPercentage(
-                    latestData.getTemperature(),
+                   // latestData.getTemperature(),
                     latestData.getPh(),
                     latestData.getTds()
             );

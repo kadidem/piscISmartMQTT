@@ -17,22 +17,22 @@ public class SensorDataService {
         return sensorDataRepository.findByIdDispo(idDispo); // Méthode pour récupérer les données par ID
     }
 
-    public double calculateOverallPercentage(double temperature, double ph, double tds) {
+    public double calculateOverallPercentage( double ph, double tds) {
         // Définir les plages pour chaque paramètre
-        double minTemperature = 10.0;
-        double maxTemperature = 60.0;
+        // double minTemperature = 10.0;
+        //double maxTemperature = 60.0;
         double minPh = 6.5;
         double maxPh = 8.5;
         int minTds = 50;
         int maxTds = 500;
 
         // Normaliser chaque valeur entre 0 et 1
-        double normalizedTemperature = (temperature - minTemperature) / (maxTemperature - minTemperature);
+       // double normalizedTemperature = (temperature - minTemperature) / (maxTemperature - minTemperature);
         double normalizedPh = (ph - minPh) / (maxPh - minPh);
         double normalizedTds = (double)(tds - minTds) / (maxTds - minTds);
 
         // Calculer le pourcentage global (moyenne des valeurs normalisées)
-        double overallPercentage = (normalizedTemperature + normalizedPh + normalizedTds) / 3 * 100;
+        double overallPercentage = ( normalizedPh + normalizedTds) / 2 * 100;
 
         // Limiter le pourcentage entre 0 et 100
         overallPercentage = Math.max(0, Math.min(100, overallPercentage));
