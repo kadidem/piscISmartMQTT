@@ -14,6 +14,13 @@ public class SensorData {
     private double tds;
     private double ph;
     private long idDispo;
+    // Attributs pour les seuils
+    private double minTemperature;
+    private double maxTemperature;
+    private double minPh;
+    private double maxPh;
+    private int minTds;
+    private int maxTds;
     @Override
     public String toString() {
         return "SensorData{" +
@@ -22,6 +29,12 @@ public class SensorData {
                 ", tds=" + tds +
                 ", ph=" + ph +
                 ", idDispo=" + idDispo +
+                ", minTemperature=" + minTemperature +
+                ", maxTemperature=" + maxTemperature +
+                ", minPh=" + minPh +
+                ", maxPh=" + maxPh +
+                ", minTds=" + minTds +
+                ", maxTds=" + maxTds +
                 '}';
     }
 }
