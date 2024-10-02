@@ -62,5 +62,6 @@ public class DispositifControleur {
         Dispositifs dispositif = dispositifService.assignerDispositif(numSerie, pisciculteurId);
         return ResponseEntity.ok(dispositif);
     }
+     
 
 }

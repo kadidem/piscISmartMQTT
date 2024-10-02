@@ -26,10 +26,6 @@ public class PisciculteurService {
         return pisciculteurs;
     }
 
-    public long countPisciculteurs() {
-        return pisciculteurRepository.count();
-    }
-
    // public Pisciculteurs activerOuDesactiverCompte(Long pisciculteurId, boolean activer) {
         // Trouver le pisciculteur par ID
     //    Pisciculteurs pisciculteur = pisciculteurRepository.findById(pisciculteurId)
