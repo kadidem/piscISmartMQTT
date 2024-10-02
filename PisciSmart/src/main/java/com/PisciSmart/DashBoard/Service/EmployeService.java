@@ -13,8 +13,9 @@ import java.util.List;
 @Service
 public class EmployeService {
     private final EmployeRepository employeRepository;
+
     @Autowired
-      public EmployeService(EmployeRepository employeRepository) {
+    public EmployeService(EmployeRepository employeRepository) {
         this.employeRepository = employeRepository;
     }
 
@@ -26,20 +27,23 @@ public class EmployeService {
         return employer;
     }
 
-
     public List<employes> getEmployesByPisciculteur(long idpisciculteur) {
 
         List<employes> employe = employeRepository.findByPisciculteur_idpisciculteur(idpisciculteur);
 
         if (employe.isEmpty()) {
-            throw new EntityNotFoundException("Aucune employé trouvée pour l'utilisateur avec l'ID : " + idpisciculteur);
+            throw new EntityNotFoundException(
+                    "Aucune employé trouvée pour l'utilisateur avec l'ID : " + idpisciculteur);
         }
 
         return employe;
     }
 
-    
-   // public List<employes> getEmployesByPisciculteur(Long idpisciculteur) {
-     //   return employeRepository.findByPisciculteur_idpisciculteur(idpisciculteur);
-    //}
+    public long countEmployes() {
+        return employeRepository.count();
+    }
+
+    // public List<employes> getEmployesByPisciculteur(Long idpisciculteur) {
+    // return employeRepository.findByPisciculteur_idpisciculteur(idpisciculteur);
+    // }
 }

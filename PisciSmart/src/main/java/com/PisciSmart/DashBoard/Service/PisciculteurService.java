@@ -26,15 +26,21 @@ public class PisciculteurService {
         return pisciculteurs;
     }
 
-   // public Pisciculteurs activerOuDesactiverCompte(Long pisciculteurId, boolean activer) {
-        // Trouver le pisciculteur par ID
-    //    Pisciculteurs pisciculteur = pisciculteurRepository.findById(pisciculteurId)
-      //          .orElseThrow(() -> new EntityNotFoundException("Pisciculteur non trouvé"));
+    public long countPisciculteurs() {
+        return pisciculteurRepository.count();
+    }
 
-        // Mettre à jour l'état d'activation
-        //pisciculteur.setActive(activer);
+    // public Pisciculteurs activerOuDesactiverCompte(Long pisciculteurId, boolean
+    // activer) {
+    // Trouver le pisciculteur par ID
+    // Pisciculteurs pisciculteur = pisciculteurRepository.findById(pisciculteurId)
+    // .orElseThrow(() -> new EntityNotFoundException("Pisciculteur non trouvé"));
 
-        // Sauvegarder les modifications
-     //   return pisciculteurRepository.save(pisciculteur);
-    //}
+    // Mettre à jour l'état d'activation
+    // pisciculteur.setActive(activer);
+
+
+    // Sauvegarder les modifications
+    // return pisciculteurRepository.save(pisciculteur);
+    // }
 }

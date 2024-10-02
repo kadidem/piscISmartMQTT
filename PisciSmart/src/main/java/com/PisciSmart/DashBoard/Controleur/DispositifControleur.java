@@ -37,7 +37,8 @@ public class DispositifControleur {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Dispositifs> modifierDispositif(@PathVariable Long id, @RequestBody Dispositifs dispositifDetails) {
+    public ResponseEntity<Dispositifs> modifierDispositif(@PathVariable Long id,
+            @RequestBody Dispositifs dispositifDetails) {
         Dispositifs updatedDispositif = dispositifService.modifierDispositif(id, dispositifDetails);
         if (updatedDispositif != null) {
             return ResponseEntity.ok(updatedDispositif);
@@ -62,6 +63,10 @@ public class DispositifControleur {
         Dispositifs dispositif = dispositifService.assignerDispositif(numSerie, pisciculteurId);
         return ResponseEntity.ok(dispositif);
     }
-     
+
+    @GetMapping("/count")
+    public long countDispositifs() {
+        return dispositifService.countDispositifs();
+    }
 
 }

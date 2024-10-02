@@ -18,6 +18,7 @@ public class DispositifService {
     private DispositifRepository dispositifRepository;
     @Autowired
     private PisciculteurRepository pisciculteurRepository;
+
     public List<Dispositifs> getAllDispositifs() {
         return dispositifRepository.findAll();
     }
@@ -34,8 +35,6 @@ public class DispositifService {
             throw new EntityExistsException("Cet dispositif avec ce numero de serie existe déjà");
         }
     }
-
-
 
     public Dispositifs modifierDispositif(Long id, Dispositifs dispositifDetails) {
         Dispositifs dispositif = dispositifRepository.findById(id).orElse(null);
@@ -67,8 +66,9 @@ public class DispositifService {
         // Sauvegarder les modifications
         return dispositifRepository.save(dispositif);
     }
-    
+
+    public long countDispositifs() {
+        return dispositifRepository.count();
+    }
 
 }
-
-
