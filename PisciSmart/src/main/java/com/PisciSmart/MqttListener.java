@@ -28,8 +28,8 @@ public class MqttListener {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     // Seuils pour la qualité de l'eau (à ajuster selon les besoins)
-    private static final double MIN_TEMPERATURE = 18.0;
-    private static final double MAX_TEMPERATURE = 30.0;
+    //  private static final double MIN_TEMPERATURE = 18.0;
+    //private static final double MAX_TEMPERATURE = 30.0;
     private static final double MIN_PH = 6.5;
     private static final double MAX_PH = 8.0;
     private static final int MIN_TDS = 200;
@@ -53,13 +53,13 @@ public class MqttListener {
                 JSONObject jsonObject = new JSONObject(message);
 
                 if (t.equals("WaterQuality/topic")) {
-                    double temperature = jsonObject.getDouble("temperature");
+                   // double temperature = jsonObject.getDouble("temperature");
                     int tds = jsonObject.getInt("tds");
                     double ph = jsonObject.getDouble("ph");
                     Long idDispo = jsonObject.getLong("idDispo");
 
                     SensorData sensorData = new SensorData();
-                    sensorData.setTemperature(temperature);
+                  //  sensorData.setTemperature(temperature);
                     sensorData.setTds(tds);
                     sensorData.setPh(ph);
                     sensorData.setIdDispo(idDispo);
@@ -68,12 +68,12 @@ public class MqttListener {
                     System.out.println("Données enregistrées avec succès.");
 
                     // Vérification des seuils
-                    if (temperature < MIN_TEMPERATURE || temperature > MAX_TEMPERATURE ||
+                    if (
                             ph < MIN_PH || ph > MAX_PH || tds < MIN_TDS || tds > MAX_TDS) {
 
                         // Générer une alerte si les valeurs sont hors seuil
-                        String alertMessage = generateAlertMessage(temperature, ph, tds);
-                        publishAlert(alertMessage, idDispo, temperature, ph, tds);
+                        String alertMessage = generateAlertMessage( ph, tds);
+                        publishAlert(alertMessage, idDispo, ph, tds);
                     }
 
                 }
@@ -84,11 +84,11 @@ public class MqttListener {
         });
     }
 
-    private String generateAlertMessage(double temperature, double ph, int tds) {
+    private String generateAlertMessage( double ph, int tds) {
         StringBuilder alertMessage = new StringBuilder("Alerte : ");
-        if (temperature < MIN_TEMPERATURE || temperature > MAX_TEMPERATURE) {
-            alertMessage.append("Température hors seuil. ");
-        }
+       // if (temperature < MIN_TEMPERATURE || temperature > MAX_TEMPERATURE) {
+        //    alertMessage.append("Température hors seuil. ");
+        //}
         if (ph < MIN_PH || ph > MAX_PH) {
             alertMessage.append("pH hors seuil. ");
         }
@@ -98,11 +98,11 @@ public class MqttListener {
         return alertMessage.toString();
     }
 
-    public void publishAlert(String alertMessage, Long idDispo, double temperature, double ph, int tds) throws Exception {
+    public void publishAlert(String alertMessage, Long idDispo,  double ph, int tds) throws Exception {
         JSONObject alertData = new JSONObject();
         alertData.put("idDispo", idDispo);
         alertData.put("alert", alertMessage);
-        alertData.put("temperature", temperature);
+       // alertData.put("temperature", temperature);
         alertData.put("ph", ph);
         alertData.put("tds", tds);
 

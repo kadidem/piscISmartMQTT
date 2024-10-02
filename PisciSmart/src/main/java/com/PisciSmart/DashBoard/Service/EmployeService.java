@@ -21,7 +21,7 @@ public class EmployeService {
     public List<employes> getAllEmployes() {
         List<employes> employer = employeRepository.findAll();
         if (employer.isEmpty()) {
-            throw new EntityNotFoundException("Aucun visiteurs trouvé");
+            throw new EntityNotFoundException("Aucun employer trouvé");
         }
         return employer;
     }
