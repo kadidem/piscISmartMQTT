@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-@CrossOrigin ("*")
+//@CrossOrigin ("*")
 @RestController
 
 public class SensorDataControler {
@@ -43,7 +43,18 @@ public class SensorDataControler {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @GetMapping("/device/{numSerie}")
+    public ResponseEntity<List<SensorData>> getDataByDeviceNumSerie(@PathVariable String numSerie) {
+        try {
+            List<SensorData> sensorData = sensorDataService.getDataByDeviceNumSerie(numSerie);
+            if (sensorData.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(sensorData, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping("/device/{numSerie}/percentage")
     public ResponseEntity<Double> getSensorDataPercentage(@PathVariable String numSerie) {
         List<SensorData> sensorDataList = sensorDataService.getDataByDeviceNumSerie(numSerie);
