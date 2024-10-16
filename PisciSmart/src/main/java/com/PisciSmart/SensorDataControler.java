@@ -44,9 +44,9 @@ public class SensorDataControler {
         }
     }
 
-    @GetMapping("/device/{idDispo}/percentage")
-    public ResponseEntity<Double> getSensorDataPercentage(@PathVariable Long idDispo) {
-        List<SensorData> sensorDataList = sensorDataService.getDataByDeviceId(idDispo);
+    @GetMapping("/device/{numSerie}/percentage")
+    public ResponseEntity<Double> getSensorDataPercentage(@PathVariable String numSerie) {
+        List<SensorData> sensorDataList = sensorDataService.getDataByDeviceNumSerie(numSerie);
         if (!sensorDataList.isEmpty()) {
             // Utiliser les dernières valeurs (ou une autre logique selon vos besoins)
             SensorData latestData = sensorDataList.get(sensorDataList.size() - 1);

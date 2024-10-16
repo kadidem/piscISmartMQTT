@@ -14,7 +14,7 @@ public class SensorData {
     private double tds;
     private double ph;
     private long idDispo;
-    private String NumSerie;
+    private String numSerie;
     // Attributs pour les seuils
     private double minTemperature;
     private double maxTemperature;
@@ -29,7 +29,7 @@ public class SensorData {
                 ", temperature=" + temperature +
                 ", tds=" + tds +
                 ", ph=" + ph +
-                ", NumSerie=" + NumSerie +
+                ", numSerie=" + numSerie +
                 ", minTemperature=" + minTemperature +
                 ", maxTemperature=" + maxTemperature +
                 ", minPh=" + minPh +

@@ -17,14 +17,17 @@ public class SensorDataService {
         return sensorDataRepository.findByIdDispo(idDispo); // Méthode pour récupérer les données par ID
     }
 
+    public List<SensorData> getDataByDeviceNumSerie(String numSerie) {
+        return sensorDataRepository.findByNumSerie(numSerie);
+    }
     public double calculateOverallPercentage( double ph, double tds) {
         // Définir les plages pour chaque paramètre
         // double minTemperature = 10.0;
         //double maxTemperature = 60.0;
-        double minPh = 6.5;
+        double minPh = 6.0;
         double maxPh = 8.5;
-        int minTds = 50;
-        int maxTds = 500;
+        int minTds = 400;
+        int maxTds = 1500;
 
         // Normaliser chaque valeur entre 0 et 1
        // double normalizedTemperature = (temperature - minTemperature) / (maxTemperature - minTemperature);

@@ -30,10 +30,10 @@ public class MqttListener {
     // Seuils pour la qualité de l'eau (à ajuster selon les besoins)
     //  private static final double MIN_TEMPERATURE = 18.0;
     //private static final double MAX_TEMPERATURE = 30.0;
-    private static final double MIN_PH = 6.5;
-    private static final double MAX_PH = 8.0;
-    private static final int MIN_TDS = 200;
-    private static final int MAX_TDS = 500;
+    private static final double MIN_PH = 6.0;
+    private static final double MAX_PH = 8.5;
+    private static final int MIN_TDS = 400;
+    private static final int MAX_TDS = 1500;
 
     @PostConstruct
     public void init() {
@@ -98,9 +98,9 @@ public class MqttListener {
         return alertMessage.toString();
     }
 
-    public void publishAlert(String alertMessage, String NumSerie,  double ph, int tds) throws Exception {
+    public void publishAlert(String alertMessage, String numSerie,  double ph, int tds) throws Exception {
         JSONObject alertData = new JSONObject();
-        alertData.put("NumSerie", NumSerie);
+        alertData.put("NumSerie", numSerie);
         alertData.put("alert", alertMessage);
        // alertData.put("temperature", temperature);
         alertData.put("ph", ph);
