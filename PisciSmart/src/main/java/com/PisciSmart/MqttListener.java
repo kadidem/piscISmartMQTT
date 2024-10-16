@@ -56,7 +56,7 @@ public class MqttListener {
                    // double temperature = jsonObject.getDouble("temperature");
                     int tds = jsonObject.getInt("tds");
                     double ph = jsonObject.getDouble("ph");
-                    Long NumSerie = jsonObject.getLong("NumSerie");
+                    String NumSerie = jsonObject.getString("NumSerie");
 
                     SensorData sensorData = new SensorData();
                   //  sensorData.setTemperature(temperature);
@@ -98,7 +98,7 @@ public class MqttListener {
         return alertMessage.toString();
     }
 
-    public void publishAlert(String alertMessage, Long NumSerie,  double ph, int tds) throws Exception {
+    public void publishAlert(String alertMessage, String NumSerie,  double ph, int tds) throws Exception {
         JSONObject alertData = new JSONObject();
         alertData.put("NumSerie", NumSerie);
         alertData.put("alert", alertMessage);
