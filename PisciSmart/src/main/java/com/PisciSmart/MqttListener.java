@@ -56,13 +56,13 @@ public class MqttListener {
                    // double temperature = jsonObject.getDouble("temperature");
                     int tds = jsonObject.getInt("tds");
                     double ph = jsonObject.getDouble("ph");
-                    Long idDispo = jsonObject.getLong("idDispo");
+                    Long NumSerie = jsonObject.getLong("NumSerie");
 
                     SensorData sensorData = new SensorData();
                   //  sensorData.setTemperature(temperature);
                     sensorData.setTds(tds);
                     sensorData.setPh(ph);
-                    sensorData.setIdDispo(idDispo);
+                    sensorData.setNumSerie(NumSerie);
 
                     sensorDataRepository.save(sensorData);
                     System.out.println("Données enregistrées avec succès.");
@@ -73,7 +73,7 @@ public class MqttListener {
 
                         // Générer une alerte si les valeurs sont hors seuil
                         String alertMessage = generateAlertMessage( ph, tds);
-                        publishAlert(alertMessage, idDispo, ph, tds);
+                        publishAlert(alertMessage, NumSerie, ph, tds);
                     }
 
                 }
@@ -98,9 +98,9 @@ public class MqttListener {
         return alertMessage.toString();
     }
 
-    public void publishAlert(String alertMessage, Long idDispo,  double ph, int tds) throws Exception {
+    public void publishAlert(String alertMessage, Long NumSerie,  double ph, int tds) throws Exception {
         JSONObject alertData = new JSONObject();
-        alertData.put("idDispo", idDispo);
+        alertData.put("NumSerie", NumSerie);
         alertData.put("alert", alertMessage);
        // alertData.put("temperature", temperature);
         alertData.put("ph", ph);
