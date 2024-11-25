@@ -1,4 +1,4 @@
-package com.PisciSmart;
+package com.PisciSmart.DashBoard;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

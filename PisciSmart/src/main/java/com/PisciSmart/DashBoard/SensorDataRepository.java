@@ -1,5 +1,6 @@
-package com.PisciSmart;
+package com.PisciSmart.DashBoard;
 
+import com.PisciSmart.DashBoard.SensorData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

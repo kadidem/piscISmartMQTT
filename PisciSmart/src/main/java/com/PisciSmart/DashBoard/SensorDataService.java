@@ -1,5 +1,7 @@
-package com.PisciSmart;
+package com.PisciSmart.DashBoard;
 
+import com.PisciSmart.DashBoard.SensorData;
+import com.PisciSmart.DashBoard.SensorDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,7 +9,7 @@ import java.util.List;
 @Service
 public class SensorDataService {
     @Autowired
-    private  SensorDataRepository sensorDataRepository;
+    private SensorDataRepository sensorDataRepository;
 
     public List<SensorData> getAllSensorData() {
         return sensorDataRepository.findAll(); // Méthode pour récupérer toutes les données

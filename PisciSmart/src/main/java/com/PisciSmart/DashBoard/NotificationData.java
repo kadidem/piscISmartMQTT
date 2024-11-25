@@ -1,4 +1,4 @@
-package com.PisciSmart;
+package com.PisciSmart.DashBoard;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
