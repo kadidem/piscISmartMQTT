@@ -1,4 +1,4 @@
 package com.PisciSmart.App.Controleur;
 
-public class User {
+public class UserControleur {
 }
